@@ -1,3 +1,5 @@
+import { channelReady, marketplaceReady } from "../../lib/marketplace.js";
+
 function isConfigured(env) {
   const required = [
     "PUBLIC_LAUNCH_ENABLED",
@@ -28,11 +30,21 @@ function isConfigured(env) {
     && env.LEAD_RATE_LIMIT_SECRET.length >= 32;
 }
 
+function isMarketplaceConfigured(env) {
+  return marketplaceReady(env)
+    && channelReady(env, "email")
+    && channelReady(env, "phone")
+    && env.GUIDE_ID_VERIFICATION_ENABLED === "true"
+    && typeof env.GUIDE_ID_VERIFICATION_PROVIDER === "string"
+    && env.GUIDE_ID_VERIFICATION_PROVIDER.trim().length > 0
+    && !/replace|placeholder|\[|\]/i.test(env.GUIDE_ID_VERIFICATION_PROVIDER);
+}
+
 export async function onRequestGet({ env }) {
   return Response.json(
     {
       leadIntakeEnabled: isConfigured(env),
-      marketplaceEnabled: false,
+      marketplaceEnabled: isMarketplaceConfigured(env),
       ...(isConfigured(env) ? { supportEmail: env.SUPPORT_EMAIL } : {}),
     },
     {
