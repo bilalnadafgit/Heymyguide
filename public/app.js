@@ -96,7 +96,7 @@ function footer() {
   return `<footer class="footer"><div class="container footer-inner">
     <a class="brand" href="#" data-action="home"><span class="brand-mark">h</span><span>heymy<em>Guide</em></span></a>
     <span class="footer-note">Local knowledge. Thoughtful travel. Fair pay.</span>
-    <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><span id="support-contact">Contact details publishing soon</span></div>
+    <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a id="support-contact" href="mailto:byzasindia@gmail.com">byzasindia@gmail.com</a></div>
     <span>© ${new Date().getFullYear()} heymyGuide</span>
   </div></footer>`;
 }
@@ -243,13 +243,13 @@ function customerHome() {
     </section>
     <section class="portal-section" id="portals">
       <div class="container">
-        <div class="section-heading"><div><span class="eyebrow">Designed for everyone</span><h2>Three simple portals. One community.</h2><p>Take a guided look at how travelers, local guides and the heymyGuide team could use the service.</p></div></div>
+        <div class="section-heading"><div><span class="eyebrow">Designed for everyone</span><h2>Three simple portals. One community.</h2><p>Use the secure sign-in for travelers, local guides, or authorized heymyGuide staff.</p></div></div>
         <div class="portal-entry-grid">
-          <article class="portal-entry"><span class="portal-entry-icon">${icon("search", 22)}</span><span class="eyebrow">FOR TRAVELERS</span><h3>Find your local guide</h3><p>Explore guide profiles, compare daily fees and trip costs, and see how a booking could work.</p><button class="btn btn-primary" data-action="portal-preview" data-portal="traveler">Preview traveler portal ${icon("arrow", 14)}</button></article>
-          <article class="portal-entry"><span class="portal-entry-icon">${icon("pin", 22)}</span><span class="eyebrow">FOR LOCAL GUIDES</span><h3>Share your availability</h3><p>Show local knowledge, set your own guide fee and manage the days you can host.</p><button class="btn btn-primary" data-action="portal-preview" data-portal="guide">Preview guide portal ${icon("arrow", 14)}</button></article>
-          <article class="portal-entry"><span class="portal-entry-icon">${icon("shield", 22)}</span><span class="eyebrow">FOR HEYMYGUIDE STAFF</span><h3>Care for the community</h3><p>Review reports, support travelers and guides, and oversee safety workflows.</p><button class="btn btn-primary" data-action="portal-preview" data-portal="admin">Preview admin portal ${icon("arrow", 14)}</button></article>
+          <article class="portal-entry"><span class="portal-entry-icon">${icon("search", 22)}</span><span class="eyebrow">FOR TRAVELERS</span><h3>Find your local guide</h3><p>Sign in securely to find approved guides, request an available slot and manage bookings.</p><button class="btn btn-primary" data-action="portal-preview" data-portal="traveler">Open traveler portal ${icon("arrow", 14)}</button></article>
+          <article class="portal-entry"><span class="portal-entry-icon">${icon("pin", 22)}</span><span class="eyebrow">FOR LOCAL GUIDES</span><h3>Share your availability</h3><p>Create a guide profile, set your daily fee and manage availability and booking requests.</p><button class="btn btn-primary" data-action="portal-preview" data-portal="guide">Open guide portal ${icon("arrow", 14)}</button></article>
+          <article class="portal-entry"><span class="portal-entry-icon">${icon("shield", 22)}</span><span class="eyebrow">FOR HEYMYGUIDE STAFF</span><h3>Care for the community</h3><p>Authorized staff can review reports and oversee guide verification and safety workflows.</p><button class="btn btn-primary" data-action="portal-preview" data-portal="admin">Open admin portal ${icon("arrow", 14)}</button></article>
         </div>
-        <p class="portal-disclaimer">Prototype walkthrough only · No accounts, real guide listings, bookings, SMS, chat translation or payments are connected. All example information is illustrative.</p>
+        <p class="portal-disclaimer">Account creation and marketplace actions remain protected by server-side launch and provider configuration. No sample account, guide, review or booking is presented as real.</p>
       </div>
     </section>
   </main>${footer()}`;
@@ -359,7 +359,7 @@ function bindEvents() {
       openInterestForm(action === "guide-interest" ? "guide" : "traveler", target.dataset.destination || "");
     } else if (action === "portal-preview") {
       event.preventDefault();
-      openPortalPreview(target.dataset.portal);
+      window.heymyGuidePortal?.open(target.dataset.portal);
     } else if (action === "translation-preview") {
       event.preventDefault();
       const selectedLanguage = document.querySelector("#chat-language")?.selectedOptions[0]?.textContent || "English";
