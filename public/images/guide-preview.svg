@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="760" viewBox="0 0 720 760" fill="none">
+  <defs>
+    <linearGradient id="background" x1="360" y1="0" x2="360" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#D2E0DB"/><stop offset="1" stop-color="#EDE3D1"/></linearGradient>
+    <linearGradient id="shirt" x1="360" y1="490" x2="360" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#47715D"/><stop offset="1" stop-color="#294E3D"/></linearGradient>
+  </defs>
+  <path fill="url(#background)" d="M0 0h720v760H0z"/>
+  <circle cx="570" cy="142" r="87" fill="#F6D99F" opacity=".8"/>
+  <path fill="#94A997" d="M0 416c109-81 225-80 345-25 139-95 259-59 375-17v386H0z"/>
+  <path fill="#6F8B71" d="M0 496c128-74 253-71 370-16 127-77 231-42 350-2v282H0z"/>
+  <path fill="#496B52" d="M0 576c121-57 229-44 354-10 129-48 257-33 366 7v177H0z"/>
+  <path fill="#E8D4B5" d="M66 421h167v115H66z"/><path fill="#8B6B4E" d="M52 409h195l-18 25H72z"/>
+  <path fill="#546B57" d="M88 449h21v87H88zm39 0h21v87h-21zm39 0h21v87h-21z"/>
+  <path fill="#F4EBDD" d="M288 408c-53 0-96 43-96 96v41h336v-41c0-53-43-96-96-96H288Z"/>
+  <path fill="url(#shirt)" d="M194 566c26-71 79-107 166-107s140 36 166 107l77 194H117l77-194Z"/>
+  <path fill="#6B4637" d="M288 420h144v147c0 41-32 75-72 75s-72-34-72-75V420Z"/>
+  <path fill="#845B46" d="M302 493c0-53 25-98 58-98s58 45 58 98v48c0 52-26 94-58 94s-58-42-58-94v-48Z"/>
+  <path fill="#573B31" d="M297 468c-12-47 15-91 65-96 54-6 79 25 78 71-25-10-42-26-52-45-18 25-45 38-91 40z"/>
+  <path fill="#573B31" d="M299 468c-22-9-33 8-29 31 3 19 13 30 28 28zm124 0c22-9 33 8 29 31-3 19-13 30-28 28z"/>
+  <path fill="#2D4035" d="M296 430c-4-42 22-78 68-78 38 0 60 19 69 48-40 5-80-2-137 30Z"/>
+  <path stroke="#513B32" stroke-width="9" stroke-linecap="round" d="M320 501h20m55 0h20"/>
+  <circle cx="329" cy="515" r="4" fill="#292E29"/><circle cx="384" cy="515" r="4" fill="#292E29"/>
+  <path stroke="#C89270" stroke-width="5" stroke-linecap="round" d="M356 518v21m-17 26c11 9 23 9 34 0"/>
+  <path fill="#F3E6CE" d="m291 587 65 67 65-67 29 31-62 142h-64l-62-142z"/>
+  <path fill="#345A44" d="M320 649h72l21 111h-114z"/>
+</svg>

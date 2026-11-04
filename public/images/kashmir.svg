@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="600" y1="0" x2="600" y2="530" gradientUnits="userSpaceOnUse"><stop stop-color="#BDCED2"/><stop offset="1" stop-color="#F0E7D6"/></linearGradient>
+    <linearGradient id="water" x1="600" y1="390" x2="600" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#69908B"/><stop offset="1" stop-color="#2E615D"/></linearGradient>
+    <linearGradient id="hills" x1="590" y1="235" x2="590" y2="530" gradientUnits="userSpaceOnUse"><stop stop-color="#81918A"/><stop offset="1" stop-color="#5C756C"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1200v514H0z"/>
+  <circle cx="912" cy="141" r="55" fill="#F7E8C9" opacity=".8"/>
+  <path fill="#F3F0E8" d="m0 391 147-153 118 123 161-217 117 143L717 91l146 213 96-121 241 188v153H0z"/>
+  <path fill="#D1D8D1" d="m0 421 160-159 106 133 158-206 104 128 190-181 130 208 101-121 251 187v127H0z"/>
+  <path fill="url(#hills)" d="m0 433 146-89 127 48 164-94 121 63 190-106 137 81 129-48 186 93v137H0z"/>
+  <path fill="url(#water)" d="M0 447c171 28 331-19 508 3 184 24 397 10 692-12v322H0z"/>
+  <path fill="#8BA9A0" d="M0 496c182 23 344-7 514 12 197 22 427 18 686-5v21c-257 25-485 23-688 1-177-19-340 8-512-8z" opacity=".56"/>
+  <path fill="#F3E2C2" d="M99 361h234v133H99z"/><path fill="#D3B993" d="M77 349h279l-24 28H101z"/>
+  <path fill="#5F7168" d="M111 375h24v119h-24zm50 0h24v119h-24zm50 0h24v119h-24zm50 0h24v119h-24zm50 0h16v119h-16z"/>
+  <path fill="#47645A" d="M92 419h253v13H92z"/><path fill="#E9D1A9" d="M710 388h303v111H710z"/><path fill="#61776C" d="M690 378h345l-28 25H719z"/>
+  <path fill="#425E56" d="M733 407h19v91h-19zm46 0h19v91h-19zm46 0h19v91h-19zm46 0h19v91h-19zm46 0h19v91h-19zm46 0h19v91h-19z"/>
+  <path fill="#7B5B43" d="M411 503h194l-33 42H444z"/><path stroke="#E9D7B5" stroke-width="9" d="M445 518h125"/>
+  <path stroke="#E9D7B5" stroke-width="5" d="M455 546h109"/><path stroke="#E9D7B5" stroke-width="4" d="M0 605c175 22 304 11 452 2m191 15c192 14 352 12 557-8M29 687c215-17 339-14 471 2m219-27c174 15 281 15 430-5"/>
+  <path fill="#345A51" d="M0 732h1200v28H0z"/>
+</svg>

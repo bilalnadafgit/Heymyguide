@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="600" y1="0" x2="600" y2="680" gradientUnits="userSpaceOnUse"><stop stop-color="#C8D9D0"/><stop offset="1" stop-color="#F4E7CF"/></linearGradient>
+    <linearGradient id="hill" x1="600" y1="280" x2="600" y2="700" gradientUnits="userSpaceOnUse"><stop stop-color="#829982"/><stop offset="1" stop-color="#405E4D"/></linearGradient>
+    <linearGradient id="water" x1="600" y1="470" x2="600" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#91B4A1"/><stop offset="1" stop-color="#467665"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1200v760H0z"/>
+  <circle cx="957" cy="145" r="64" fill="#F3D69E" opacity=".76"/>
+  <path fill="#AEBEA2" d="M0 429c153-111 289-93 424-25 150-145 335-125 468-35 93-72 190-54 308-3v394H0z"/>
+  <path fill="#82977D" d="M0 497c173-108 310-95 460-42 158-129 314-92 448-24 96-85 193-47 292-3v332H0z"/>
+  <path fill="url(#hill)" d="M0 549c173-93 292-95 455-31 160-103 308-71 456-11 110-71 188-46 289-6v259H0z"/>
+  <path fill="url(#water)" d="M0 578c197 10 349-20 518-3 222 22 440 15 682-2v187H0z"/>
+  <path fill="#E8D4AE" d="M116 368h270v151H116z"/><path fill="#856B4B" d="M96 357h310l-24 27H120z"/>
+  <path fill="#4B644F" d="M145 397h30v122h-30zm56 0h30v122h-30zm56 0h30v122h-30zm56 0h30v122h-30z"/>
+  <path fill="#A78A62" d="M588 400h24v108h-24z"/><path fill="#F3E5CB" d="M565 390h71l-9 24h-53z"/>
+  <path fill="#D9C197" d="m590 423-59 115h118z"/><path stroke="#F3E5CB" stroke-width="5" d="M574 499h32"/>
+  <path fill="#D2AC78" d="M781 404h170v120H781z"/><path fill="#705C47" d="m760 393 106-53 107 53z"/>
+  <path fill="#435D4A" d="M806 426h27v98h-27zm48 0h27v98h-27zm48 0h27v98h-27z"/>
+  <path fill="#42694F" d="M0 649c164-37 288-39 463-3 207 43 471 12 737-21v135H0z"/>
+  <path fill="#9EB79A" d="M0 694c176-22 324-18 466 3m183 6c183 18 348 9 551-19m-1097 51c167-13 278-9 401 1" stroke="#C9D8B9" stroke-width="5" opacity=".72"/>
+  <path fill="#314F3D" d="M0 732h1200v28H0z"/>
+</svg>
