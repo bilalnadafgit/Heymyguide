@@ -42,7 +42,7 @@ Vercel's current [Terms of Service](https://vercel.com/legal/terms) state that i
 
 ## Marketplace backend prototype status
 
-The API and schema are implementation groundwork, not a complete or end-to-end tested marketplace. Production D1 migrations through `0003` are applied. The public health endpoint reports `marketplaceEnabled: false`. Marketplace routes fail closed unless the D1 binding, launch/legal approvals, HMAC secrets, OTP provider, identity review and feature gates are configured. Setting example values to `true` does not make the product safe or production-ready.
+The API and schema are implementation groundwork, not a complete or end-to-end tested marketplace. Production D1 migrations through `0003` are applied. The public health endpoint reports `marketplaceEnabled: false`. Marketplace health remains false until D1, launch/legal approvals, marketplace switches, both OTP channels and guide identity-review settings are configured. Health checks configuration presence only; they do not send a test OTP, check provider availability, validate a provider's legal suitability, or independently verify guide identities. Marketplace routes also fail closed unless their server-side gates pass. Setting example values to `true` does not make the product safe or production-ready.
 
 The current routes cover basic OTP delivery/verification (Resend email and Twilio SMS), traveler phone linking, sessions/roles, owner-email admin bootstrap, guide profiles/experiences, guide availability, guide discovery, booking request/accept/decline/start/cancel, trip-completion OTP, direct-cash status, reports and admin review. The schema migrations ran against production D1, but no end-to-end API flow has been run against it. The current guide ID review is manual using a provider reference; there is no identity-provider API or callback, and the app cannot determine whether a reference is genuine. Do not approve guides until a lawful provider workflow is configured and independently verified.
 
@@ -64,7 +64,7 @@ See `.dev.vars.example`. In addition to the D1 `DB` binding, configure:
 - The exact legal entity and entity type, applicable registration details, full registered address and state, support email, privacy contact email, grievance contact name/email, and an accurate description of where/how submitted details are processed. These are **not optional defaults**. Do not invent them.
 - `LEAD_RATE_LIMIT_SECRET` as a random secret of at least 32 characters, stored only in the Pages Functions environment (not a public `vars` file if the dashboard offers a secret setting).
 
-Keep the intake switches off if any item is missing. The readiness route checks configuration presence, not a real database transaction or the legal adequacy of the notices. A successful readiness response is not a legal or security approval.
+Keep the intake switches off if any item is missing. The health route checks configuration presence, not a real database transaction, a test OTP delivery, the legal adequacy of the notices, or provider/identity-review outcomes. A successful readiness response is not a legal or security approval.
 
 ## India launch and business checklist
 
