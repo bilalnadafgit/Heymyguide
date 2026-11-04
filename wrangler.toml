@@ -1,3 +1,9 @@
 name = "heymyguide"
 compatibility_date = "2026-11-04"
 pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "heymyguide-marketplace"
+database_id = "076c71ef-8789-4bf5-bb1a-25279eaf3d12"
+migrations_dir = "migrations"
