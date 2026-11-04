@@ -6,6 +6,21 @@
   let phoneChallenge = null;
   let user = null;
   let marketplaceEnabled = false;
+  let marketplaceBlockers = [];
+
+  const blockerDescriptions = {
+    database: "Production database binding (DB) is missing.",
+    marketplace_switch: "Marketplace launch has not been enabled by the operator.",
+    marketplace_policy: "MARKETPLACE_PRIVACY_NOTICE_APPROVED and MARKETPLACE_TERMS_APPROVED must be approved and enabled.",
+    region_review: "MARKETPLACE_GLOBAL_REGIONS_REVIEWED must be enabled only for counsel-reviewed launch regions.",
+    launch_policy: "PUBLIC_LAUNCH_ENABLED and both LAUNCH privacy/terms approval settings must be approved and enabled.",
+    business_details: "Complete the company identity, support/privacy/grievance contacts, and accurate data-processing disclosure in Cloudflare.",
+    auth_secrets: "Set AUTH_HMAC_SECRET and SESSION_HMAC_SECRET as separate Cloudflare production secrets (never in Git or chat).",
+    email_otp: "Enable email OTP and configure RESEND_API_KEY and the verified OTP_FROM_EMAIL sender in Cloudflare.",
+    phone_otp: "Enable phone OTP and configure TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and a verified TWILIO_FROM_NUMBER in Cloudflare.",
+    guide_identity_review: "Choose and establish a lawful guide identity-review workflow, then configure its review setting and provider. A provider label alone does not verify identities.",
+    admin_owner: "Set ADMIN_OWNER_EMAIL to the real, owner-controlled admin address.",
+  };
 
   const roles = {
     traveler: { title: "Traveler portal", label: "Traveler", channel: "email" },
@@ -62,7 +77,11 @@
   }
 
   function readinessBanner() {
-    return marketplaceEnabled ? "" : `<div class="readiness-card"><div><strong>Marketplace is not enabled.</strong><p>Sign-in and booking are protected by server-side configuration. No demo OTP or fake account can access customer data.</p></div></div>`;
+    if (marketplaceEnabled) return "";
+    const blockers = marketplaceBlockers.length
+      ? [...new Set(marketplaceBlockers)].map((code) => `<li>${escape(blockerDescriptions[code] || "A server-side launch requirement is incomplete.")}</li>`).join("")
+      : "<li>Marketplace readiness could not be checked. Try again when the service is available.</li>";
+    return `<div class="readiness-card"><div><strong>Real accounts and booking are not available yet.</strong><p>These server-side configuration requirements are incomplete:</p><ul>${blockers}</ul><p>Passing these checks confirms configuration only. It does not test message delivery, establish legal approval, or verify a guide's identity. No demo account can access customer data.</p></div></div>`;
   }
 
   function signInView(role, message = "") {
@@ -102,11 +121,13 @@
     try {
       const health = await api("/api/health");
       marketplaceEnabled = health.marketplaceEnabled === true;
+      marketplaceBlockers = Array.isArray(health.marketplaceBlockers) ? health.marketplaceBlockers : [];
     } catch {
       marketplaceEnabled = false;
+      marketplaceBlockers = [];
     }
     if (!marketplaceEnabled) {
-      signInView(role, "Real accounts and booking are unavailable until marketplace, legal, OTP, and verification prerequisites are configured.");
+      signInView(role);
       return;
     }
     try {
