@@ -24,7 +24,7 @@ To run Cloudflare Pages Functions locally, install a supported Node.js LTS relea
 
 ## Deploy a preview on Cloudflare Pages
 
-1. The current GitHub repository was empty when inspected. Push this project to its `main` branch from your local machine.
+1. The source is already available in the GitHub repository's `main` branch. Do not force-push or replace its history.
 2. Create a Cloudflare account, connect the repository through the Cloudflare dashboard's normal GitHub authorization, and create a Pages project. Use `public` as the build output directory and leave the build command empty. Cloudflare Pages Functions in `functions/` are deployed with the site.
 3. Create a D1 database and apply [`migrations/0001_initial.sql`](./migrations/0001_initial.sql), then [`migrations/0002_marketplace_foundation.sql`](./migrations/0002_marketplace_foundation.sql), using the Cloudflare dashboard's D1 console or Wrangler.
 4. Bind the D1 database to the Pages project with the exact binding name `DB` in both preview and production. Redeploy after adding the binding.
@@ -33,7 +33,7 @@ To run Cloudflare Pages Functions locally, install a supported Node.js LTS relea
 7. After company/contact details and reviewed notices are published, set `LAUNCH_PRIVACY_NOTICE_APPROVED=true`, `LAUNCH_TERMS_APPROVED=true`, and `PUBLIC_LAUNCH_ENABLED=true`, redeploy, and confirm the readiness endpoint and a fresh test entry.
 8. Add the domain in the Cloudflare Pages project and follow the dashboard's DNS/TLS instructions. Configure a second owner with MFA and least privilege; do not share passwords or recovery codes.
 
-Git is available for source control, but this workspace has no Node.js, Cloudflare account integration, D1 database, or Vercel deployment authorization. The account owner must create provider resources and authorize deployment from the provider's normal sign-in. The API migration and handlers have not been tested against D1 or a live Pages Functions runtime.
+The repository is not yet connected to a Cloudflare Pages project, and no live Pages Functions or D1 deployment has been verified. The account owner must create provider resources and authorize deployment through the authenticated provider dashboard. The API migration and handlers have not been tested against a live Cloudflare runtime.
 
 ## Vercel static preview
 
