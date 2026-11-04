@@ -200,8 +200,8 @@ export async function onRequestPost({ request, env }) {
 }
 
 async function requestCompletionCode(env, booking, session) {
-  if (!booking || booking.guide_user_id !== session.id || booking.status !== "in_progress") {
-    return json({ error: "Only the guide on an active trip can request trip completion." }, 409);
+  if (!booking || booking.guide_user_id !== session.id || !["in_progress", "completion_pending"].includes(booking.status)) {
+    return json({ error: "Only the assigned guide can request trip completion for an active trip." }, 409);
   }
   if (Date.parse(booking.ends_at) > Date.now()) return json({ error: "The completion code can be requested after the scheduled trip end." }, 409);
   if (!channelReady(env, "phone")) return json({ error: "Phone OTP is not configured; no completion code was sent." }, 503);
@@ -216,36 +216,59 @@ async function requestCompletionCode(env, booking, session) {
   }
   const code = randomDigits(6);
   const codeHash = await hmac(env.AUTH_HMAC_SECRET, `${booking.id}:${code}`);
-  await env.DB.prepare(`
+  const challenge = await env.DB.prepare(`
     INSERT INTO booking_completion_challenges (booking_id, code_hash, expires_at, attempts, verified_at)
-    VALUES (?, ?, unixepoch() + 900, 0, NULL)
+    SELECT ?, ?, unixepoch() + 900, 0, NULL
+    WHERE EXISTS (
+      SELECT 1 FROM guide_bookings
+      WHERE id = ? AND guide_user_id = ?
+        AND status IN ('in_progress', 'completion_pending')
+        AND julianday(ends_at) <= julianday('now')
+    )
     ON CONFLICT(booking_id) DO UPDATE SET
       code_hash = excluded.code_hash,
       expires_at = excluded.expires_at,
       attempts = 0,
       verified_at = NULL,
       created_at = unixepoch()
-  `).bind(booking.id, codeHash).run();
+    WHERE booking_completion_challenges.verified_at IS NULL
+      AND (
+        booking_completion_challenges.expires_at <= unixepoch()
+        OR booking_completion_challenges.attempts >= 5
+      )
+    RETURNING booking_id
+  `).bind(booking.id, codeHash, booking.id, session.id).first();
+  if (!challenge) {
+    return json({ error: "A valid completion code is active, or the trip state changed." }, 409);
+  }
   try {
-    await sendOtp(env, "phone", traveler.phone_e164, code);
-    const result = await env.DB.prepare(`
+    await env.DB.prepare(`
       UPDATE guide_bookings SET status = 'completion_pending'
       WHERE id = ? AND guide_user_id = ? AND status = 'in_progress'
         AND julianday(ends_at) <= julianday('now')
+        AND EXISTS (
+          SELECT 1 FROM booking_completion_challenges
+          WHERE booking_id = ? AND code_hash = ?
+            AND verified_at IS NULL AND expires_at > unixepoch()
+        )
       RETURNING id
-    `).bind(booking.id, session.id).first();
-    if (!result) {
-      await env.DB.prepare("DELETE FROM booking_completion_challenges WHERE booking_id = ? AND verified_at IS NULL").bind(booking.id).run();
-      return json({ error: "The trip state changed before the completion code could be sent." }, 409);
-    }
+    `).bind(booking.id, session.id, booking.id, codeHash).first();
+    const pending = await env.DB.prepare(`
+      SELECT 1
+      FROM guide_bookings booking
+      JOIN booking_completion_challenges challenge ON challenge.booking_id = booking.id
+      WHERE booking.id = ? AND booking.guide_user_id = ? AND booking.status = 'completion_pending'
+        AND challenge.code_hash = ? AND challenge.verified_at IS NULL
+        AND challenge.expires_at > unixepoch()
+    `).bind(booking.id, session.id, codeHash).first();
+    if (!pending) return json({ error: "The trip state changed before the completion code could be sent." }, 409);
+    await sendOtp(env, "phone", traveler.phone_e164, code);
     return json({ completionCodeSent: true, expiresInSeconds: 900, message: "A code was sent to the traveler's verified phone. The traveler must enter it privately in heymyGuide; never ask them to share it." });
   } catch (error) {
-    await env.DB.prepare("DELETE FROM booking_completion_challenges WHERE booking_id = ? AND verified_at IS NULL").bind(booking.id).run();
-    console.error(`Completion code send failed: ${error instanceof Error ? error.name : "unknown error"}`);
+    console.error(`Completion-code request failed: ${error instanceof Error ? error.name : "unknown error"}`);
     return json({ error: "The completion code could not be sent; the trip is not marked complete." }, 503);
   }
 }
-
 async function verifyCompletionCode(env, booking, session, code) {
   if (!booking || booking.traveler_user_id !== session.id || booking.status !== "completion_pending") {
     return json({ error: "There is no trip completion awaiting your confirmation." }, 409);
